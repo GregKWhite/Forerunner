@@ -1,5 +1,5 @@
 module Forerunner
-  class ActionData
+  class Builder
     class InvalidActionTypeError < StandardError
       attr_reader :action_type
 
@@ -14,7 +14,7 @@ module Forerunner
       private
 
       def valid_types
-        Forerunner::ActionData::VALID_ACTION_TYPES.map do |valid_type|
+        Forerunner::Builder::VALID_ACTION_TYPES.map do |valid_type|
           "`#{valid_type}`"
         end.to_sentence
       end
