@@ -6,7 +6,7 @@ describe Forerunner::Builder do
 
   describe ".new" do
     it "returns a new Forerunner::Builder with empty action data arrays" do
-      expect(subject.before_actions).to eq []
+      expect(subject.actions).to eq []
     end
   end
 
@@ -17,21 +17,12 @@ describe Forerunner::Builder do
 
     it "adds the action data to the appropriate action array" do
       subject.enqueue_action(action_type, action_params, block)
-      expect(subject.before_actions.count).to eq 1
+      expect(subject.actions.count).to eq 1
 
-      action_data = subject.before_actions.first
+      action_data = subject.actions.first
       expect(action_data.action_names).to eq %i(foo bar)
       expect(action_data.options).to eq if: :some_expression
-    end
-
-    context "when given an invalid action type" do
-      let(:action_type) { :invalid }
-
-      it "throws a Forerunner::ActionData::InvalidActionTypeError" do
-        expect { subject.enqueue_action(action_type, action_params, block) }.to(
-          raise_error(Forerunner::Builder::InvalidActionTypeError)
-        )
-      end
+      expect(action_data.action_type).to eq :before
     end
   end
 
@@ -51,7 +42,7 @@ describe Forerunner::Builder do
     it "empties the action queues after adding callbacks" do
       subject.process_actions(:target)
 
-      expect(subject.before_actions).to eq []
+      expect(subject.actions).to eq []
     end
   end
 end

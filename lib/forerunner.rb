@@ -2,8 +2,8 @@ require "active_support"
 require "forerunner/analyzer"
 require "forerunner/action_data"
 require "forerunner/action_data/missing_action_name_error"
+require "forerunner/action_data/invalid_action_type_error"
 require "forerunner/builder"
-require "forerunner/builder/invalid_action_type_error"
 
 module Forerunner
   extend ActiveSupport::Concern
