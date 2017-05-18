@@ -4,7 +4,7 @@ module Forerunner
 
     attr_reader :options, :action_names, :block, :action_type
 
-    def initialize(action_type: action_type, action_data:, block: nil)
+    def initialize(action_type:, action_data:, block: nil)
       @action_type = action_type
       @options = action_data.extract_options!
       @action_names = action_data
@@ -31,7 +31,7 @@ module Forerunner
     end
 
     def validate_action_names!
-      return if action_names.present?
+      return if action_names.present? || block.present?
 
       raise MissingActionNameError
     end

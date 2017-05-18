@@ -1,19 +1,76 @@
-describe "Forerunner", type: :request do
-  class TestController < ApplicationController
-    include Forerunner
+require 'rspec/rails'
 
-    precede_with :foo, only: %i(foo)
-    def show
-      head :ok
+describe "Forerunner" do
+  describe "#precede_with", type: :controller do
+    context "when specifying a method to call" do
+      controller do
+        include Forerunner
+
+        precede_with :target_action
+        def main_action
+          render plain: "OK"
+        end
+
+        def target_action
+        end
+      end
+
+      it "adds a before_action to the next defined controller action" do
+        routes.draw { get "main_action" => "anonymous#main_action" }
+
+        expect(controller).to receive(:target_action).ordered
+        expect(controller).to receive(:main_action).and_call_original.ordered
+
+        get :main_action
+      end
     end
 
-    def foo; end
-  end
+    context "when passing a block" do
+      controller do
+        include Forerunner
 
-  describe "#precede_with" do
-    context "with valid arguments" do
-      it "adds a before_filter for each of the specified methods for the next defined controller action" do
-        expect(TestController.list_before_actions).to(include :foo)
+        precede_with { |c| c.target_action }
+        def main_action
+          render plain: "OK"
+        end
+
+        def target_action
+        end
+      end
+
+      it "adds a before_action that calls the passed block" do
+        routes.draw { get "main_action" => "anonymous#main_action" }
+
+        expect(controller).to receive(:target_action).ordered
+        expect(controller).to receive(:main_action).and_call_original.ordered
+
+        get :main_action
+      end
+    end
+
+    context "when there are multiple methods in the controller" do
+      controller do
+        include Forerunner
+
+        precede_with :target_action
+        def main_action
+          render plain: "OK"
+        end
+
+        def other_action
+          render plain: "OK"
+        end
+
+        def target_action
+        end
+      end
+
+      it "only adds the before_action to the controller action following the precede_with call" do
+        routes.draw { get "other_action" => "anonymous#other_action" }
+
+        expect(controller).not_to receive(:target_action)
+
+        get :other_action
       end
     end
   end

@@ -17,8 +17,22 @@ describe Forerunner::ActionData do
       it "throws a Forerunner::ActionData::MissingActionNameError" do
         expect { subject }.to raise_error(Forerunner::ActionData::MissingActionNameError)
       end
-    end
 
+      context "when there is a block" do
+        let(:action_block) { proc { puts "yay" } }
+        subject do
+          described_class.new(
+            action_type: action_type,
+            action_data: action_data,
+            block: action_block
+          )
+        end
+
+        it "does not throw an error" do
+          expect { subject }.not_to raise_error
+        end
+      end
+    end
 
     context "when given an invalid action type" do
       let(:action_type) { :invalid }

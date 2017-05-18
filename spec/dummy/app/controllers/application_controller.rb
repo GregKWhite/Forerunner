@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include ActiveSupport::Callbacks
+  include Forerunner
 
   class << self
     %i(all before after around).each do |filter_type|
