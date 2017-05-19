@@ -10,15 +10,15 @@ module Forerunner
 
   class_methods do
     def precede_with(*filter_params, &block)
-      builder.enqueue_action(:before, filter_params, block)
+      forerunner_builder.enqueue_action(:before, filter_params, block)
     end
 
     def method_added(controller_action)
-      builder.process_actions(controller_action)
+      forerunner_builder.process_actions(controller_action)
     end
 
-    def builder
-      @builder ||= Forerunner::Builder.new(self)
+    def forerunner_builder
+      @forerunner_builder ||= Forerunner::Builder.new(self)
     end
   end
 end
