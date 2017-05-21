@@ -121,3 +121,7 @@ The gem is available as open source under the terms of the [MIT License](http://
 * `after_action`
 * `around_action`
 * Support for `prepend_#{type}_action`
+
+## Notes
+This gem is only guaranteed to be compatible with Rails `~> 5.0`. Better
+compatibility is coming soon.
