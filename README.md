@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/GregKWhite/Forerunner.svg?style=svg)](https://circleci.com/gh/GregKWhite/Forerunner)
+[![codecov](https://codecov.io/gh/GregKWhite/Forerunner/branch/master/graph/badge.svg)](https://codecov.io/gh/GregKWhite/Forerunner)
+
 # Forerunner
 Forerunner defines a simple, familiar DSL for definining callbacks above
 controller actions instead of defining them at the top of the class using
