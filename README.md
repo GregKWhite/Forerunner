@@ -114,12 +114,54 @@ In this implementation, you don't have to worry about what happens before
 `create` is called; it's readily apparent! You can immediately tell that
 `authorize_user` is called, immediately followed by `another_action`.
 
+## Other Goodies
+
+`Forerunner` exposes two additional methods not mentioned above: 
+`Forerunner#follow_with` and `Forerunner#surround_with`. These methods correspond
+to `after_action` and `around_action`, respectively. These methods are used in the same
+way that `precede_with` is used; define the callback above the target controller
+action, and they get executed just like you'd expect!
+
+Here are some examples:
+
+```ruby
+class PostsController < ApplicationController
+  follow_with :after_create_action
+  def create
+    # create logic goes here
+  end
+  
+  def after_create_action
+    
+  end
+end
+```
+
+The above is pretty straightforward — the `after_create_action` is executed immediately
+after the finishing of `create`.
+
+```ruby
+class PostsController < ApplicationController
+  surround_with :log_exceptions
+  def create
+    # create logic goes here
+  end
+  
+  def log_exceptions
+    yield
+  rescue => exception
+    Rails.logger.error("Oh no, an exception was caught! That's not good.")
+  end
+end
+```
+
+This, for example, would log any errors that occurred within the controller action. You probably shouldn't
+use this in favor of a better error handling approach though.
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
 ## Coming Soon
-* `after_action`
-* `around_action`
 * Support for `prepend_#{type}_action`
 
 ## Notes
