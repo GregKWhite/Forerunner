@@ -54,7 +54,6 @@ describe "Forerunner" do
 
         precede_with :target_action
         def main_action
-          render plain: "OK"
         end
 
         def other_action
@@ -128,7 +127,6 @@ describe "Forerunner" do
 
         follow_with :target_action
         def main_action
-          render plain: "OK"
         end
 
         def other_action
@@ -218,7 +216,6 @@ describe "Forerunner" do
 
         surround_with :target_action
         def main_action
-          render plain: "OK"
         end
 
         def other_action
@@ -226,21 +223,13 @@ describe "Forerunner" do
         end
 
         def target_action
-          first_action
-          yield
-          second_action
         end
-
-        def first_action; end
-        def second_action; end
       end
 
       it "only adds the before_action to the controller action following the surround_with call" do
         routes.draw { get "other_action" => "anonymous#other_action" }
 
         expect(controller).not_to receive(:target_action)
-        expect(controller).not_to receive(:first_action)
-        expect(controller).not_to receive(:second_action)
 
         get :other_action
       end
