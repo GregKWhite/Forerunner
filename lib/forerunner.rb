@@ -17,6 +17,10 @@ module Forerunner
       forerunner_builder.enqueue_action(:after, filter_params, block)
     end
 
+    def surround_with(*filter_params, &block)
+      forerunner_builder.enqueue_action(:around, filter_params, block)
+    end
+
     def method_added(controller_action)
       forerunner_builder.process_actions(controller_action)
     end
