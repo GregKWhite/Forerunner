@@ -13,6 +13,10 @@ module Forerunner
       forerunner_builder.enqueue_action(:before, filter_params, block)
     end
 
+    def follow_with(*filter_params, &block)
+      forerunner_builder.enqueue_action(:after, filter_params, block)
+    end
+
     def method_added(controller_action)
       forerunner_builder.process_actions(controller_action)
     end
