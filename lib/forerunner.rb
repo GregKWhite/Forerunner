@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "active_support"
 require "forerunner/analyzer"
 require "forerunner/action_data"

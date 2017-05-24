@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Forerunner
   class Analyzer
     attr_reader :controller

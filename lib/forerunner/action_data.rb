@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 module Forerunner
   class ActionData
-    VALID_ACTION_TYPES = %i(before around after)
+    VALID_ACTION_TYPES = [:before, :around, :after].freeze
 
     attr_reader :options, :action_names, :block, :action_type
 

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Forerunner
   class Builder
     attr_reader :controller
@@ -36,7 +37,7 @@ module Forerunner
       ActionData.new(
         action_type: action_type,
         action_data: action_params,
-        block: block
+        block: block,
       )
     end
   end
